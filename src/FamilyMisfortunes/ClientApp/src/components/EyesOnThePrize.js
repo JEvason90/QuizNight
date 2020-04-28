@@ -58,22 +58,29 @@ export class Eyes extends Component {
         return (
             <div>
 
-                <div className="row">
-                    <div className="col-sm"><button className="btn btn-primary" onClick={this.previousPerson}>Previous</button></div>
+                <div className="row text-center">
+                    <div className="col-sm"></div>
                     <div className="col-sm">
-                        <h1 className="text-center">Eyes on the prize</h1>
-
-                        <p className="text-center">Guess the celebrity/character</p>
+                        <h1>Eyes on the prize</h1>
+                        <p>Guess the celebrity/character</p>
                     </div>
-                    <div className="col-sm"><button className="btn btn-primary" onClick={this.nextPerson}>Next</button></div>
+                    <div className="col-sm"></div>
                 </div>
 
-                <div className="row">
-                    <div className="col-sm"></div>
+                <div className="row text-center">
+                    <div className="col-sm"><button disabled={this.state.currentCount === 0} className="btn btn-primary" onClick={this.previousPerson}>Previous</button></div>
                     <div className="col-sm">
                         <img src={images[imageData[this.state.currentCount].images[this.state.imageId].imageName]} style={imgStyle}></img>
                     </div>
-                    <div className="col-sm"><button className="btn btn-primary" onClick={this.reveal}>Reveal</button></div>
+                    <div className="col-sm"><button disabled={this.state.currentCount === 4} className="btn btn-primary" onClick={this.nextPerson}>Next</button></div>
+                </div>
+
+                <div className="row text-center">
+                    <div className="col-sm"></div>
+                    <div className="col-sm">
+                        <button className="btn btn-primary" onClick={this.reveal}>Reveal</button>
+                    </div>
+                    <div className="col-sm"></div>
                 </div>
 
 
