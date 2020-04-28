@@ -11,13 +11,13 @@ export class Home extends Component {
 
   render() {
     return (
-      <div class="container">
-        <div class="row">
-          <div class="col-sm"></div>
-          <div class="col-sm">
+      <div className="container">
+        <div className="row text-center">
+          <div className="col-sm"></div>
+          <div className="col-sm">
             <img src={familyMisfortunes} style={imgStyle}></img>
           </div>
-          <div class="col-sm"></div>
+          <div className="col-sm"></div>
         </div>
         <br />
       </div>
