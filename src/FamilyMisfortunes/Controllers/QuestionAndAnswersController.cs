@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FamilyMisfortunes.Models;
+using FamilyMisfortunes.Services;
 
 namespace FamilyMisfortunes.Controllers
 {
@@ -14,30 +15,30 @@ namespace FamilyMisfortunes.Controllers
     {
 
         private readonly ILogger<QuestionAndAnswersController> _logger;
+        private IQuizService _quizService;
 
-        public QuestionAndAnswersController(ILogger<QuestionAndAnswersController> logger)
+
+
+        public QuestionAndAnswersController(ILogger<QuestionAndAnswersController> logger, IQuizService quizService)
         {
             _logger = logger;
+            _quizService = quizService;
         }
 
-        [HttpGet]
-        public QuestionAndAnswers Get()
+        [HttpGet("{questionId}")]
+        public async Task<IActionResult> Get(int questionId)
         {
-            var response = new QuestionAndAnswers();
-        
-            response.Question = "Name a country with a HDI greater than 0.7, but less than 0.8";
-            
-            var answer = new Answer(){
-                Id = 1,
-                Score = 350,
-                Phrase = "Holding Phrase"
-            };
+            var questionsWithAnswers = await _quizService.GetQuestionWithAnswersById(questionId);
 
-            response.Id = 1;
-            response.Answers = new List<Answer>();
-            response.Answers.Add(answer);
+            return Ok(questionsWithAnswers);
+        }
 
-            return response;
+        [HttpGet("{questionId}/answers")]
+        public async Task<IActionResult> GetAnswers(int questionId)
+        {
+            var answers = await _quizService.GetAnswerByQuestionIdAsync(questionId);
+
+            return Ok(answers);
         }
     }
 }
