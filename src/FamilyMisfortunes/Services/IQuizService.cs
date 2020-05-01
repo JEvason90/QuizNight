@@ -6,7 +6,11 @@ namespace FamilyMisfortunes.Services
 {
     public interface IQuizService
     {
-        Task<Question> GetQuestionWithAnswersById(int questionId);
+        Task<IEnumerable<Question>> GetQuestionsAsync();
+        Task<Question> GetQuestionWithAnswersByIdAsync(int questionId);
         Task<IEnumerable<Answer>> GetAnswerByQuestionIdAsync(int questionId);
+
+        Task<IEnumerable<Answer>> GetTop10ByQuestionIdAsync(int questionId);
+
     }
 }

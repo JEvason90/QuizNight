@@ -10,7 +10,7 @@ using FamilyMisfortunes.Services;
 namespace FamilyMisfortunes.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/")]
     public class QuestionAndAnswersController : ControllerBase
     {
 
@@ -25,18 +25,39 @@ namespace FamilyMisfortunes.Controllers
             _quizService = quizService;
         }
 
-        [HttpGet("{questionId}")]
+        [HttpGet("questions/")]
+        public async Task<IActionResult> Get()
+        {
+            var questions = await _quizService.GetQuestionsAsync();
+            
+            return Ok(questions);
+        }
+
+        [HttpGet("questions/{questionId}")]
         public async Task<IActionResult> Get(int questionId)
         {
-            var questionsWithAnswers = await _quizService.GetQuestionWithAnswersById(questionId);
+            var questionsWithAnswers = await _quizService.GetQuestionWithAnswersByIdAsync(questionId);
 
             return Ok(questionsWithAnswers);
         }
 
-        [HttpGet("{questionId}/answers")]
+        [HttpGet("questions/{questionId}/answers")]
         public async Task<IActionResult> GetAnswers(int questionId)
         {
             var answers = await _quizService.GetAnswerByQuestionIdAsync(questionId);
+
+            return Ok(answers);
+        }
+
+        [HttpGet("questions/{questionId}/top10answers")]
+        public async Task<IActionResult> GetTop10Answers(int questionId)
+        {
+            var answers = await _quizService.GetTop10ByQuestionIdAsync(questionId);
+
+            if(answers == null)
+            {
+                return NotFound();
+            }
 
             return Ok(answers);
         }
