@@ -5,8 +5,8 @@ function importAll(r) {
     let images = {};
     r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
     return images;
-  }
-  
+}
+
 const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
 
 console.log(imageData);
@@ -20,7 +20,7 @@ export class Eyes extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { currentCount: 0, imageId: 1};
+        this.state = { currentCount: 0, imageId: 1 };
         this.nextPerson = this.nextPerson.bind(this);
         this.previousPerson = this.previousPerson.bind(this);
         this.reveal = this.reveal.bind(this);
@@ -41,13 +41,12 @@ export class Eyes extends Component {
     }
 
     reveal() {
-        if(this.state.imageId === 1)
-        {
+        if (this.state.imageId === 1) {
             this.setState({
                 imageId: 0
             })
         }
-        else{
+        else {
             this.setState({
                 imageId: 1
             })
@@ -58,33 +57,29 @@ export class Eyes extends Component {
         return (
             <div>
 
-                <div className="row text-center">
+                <div className="row">
                     <div className="col-sm"></div>
-                    <div className="col-sm">
+                    <div className="col-sm  text-center">
                         <h1>Eyes on the prize</h1>
                         <p>Guess the celebrity/character</p>
+                        <div className="row">
+                            <div className="col-sm"><button disabled={this.state.currentCount === 0} className="btn btn-primary" onClick={this.previousPerson}>Previous</button></div>
+                            <div className="col-sm">
+                                <button className="btn btn-primary" onClick={this.reveal}>Reveal</button>
+                            </div>
+                            <div className="col-sm"><button disabled={this.state.currentCount === 4} className="btn btn-primary" onClick={this.nextPerson}>Next</button></div>
+                        </div>
                     </div>
                     <div className="col-sm"></div>
                 </div>
 
-                <div className="row text-center">
-                    <div className="col-sm"><button disabled={this.state.currentCount === 0} className="btn btn-primary" onClick={this.previousPerson}>Previous</button></div>
-                    <div className="col-sm">
+                <div className="row">
+                    <div className="col-sm"></div>
+                    <div className="col-sm  text-center">
                         <img src={images[imageData[this.state.currentCount].images[this.state.imageId].imageName]} style={imgStyle}></img>
                     </div>
-                    <div className="col-sm"><button disabled={this.state.currentCount === 4} className="btn btn-primary" onClick={this.nextPerson}>Next</button></div>
-                </div>
-
-                <div className="row text-center">
-                    <div className="col-sm"></div>
-                    <div className="col-sm">
-                        <button className="btn btn-primary" onClick={this.reveal}>Reveal</button>
-                    </div>
                     <div className="col-sm"></div>
                 </div>
-
-
-
             </div>
         );
     }
